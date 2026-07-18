@@ -15,9 +15,9 @@ you, and for an AI agent (Claude Code or otherwise) helping you maintain it.
 
 - **Zero duplicated information** — servers, domains, and projects aren't
   separate files, they're derived from fields already on each service.
-- **AI-editable by design** — everything is YAML on disk; there's also a
-  full JSON CRUD API under `/api`, meant as the foundation for future MCP
-  tools.
+- **AI-editable by design** — everything is YAML on disk, a full JSON CRUD
+  API under `/api`, and an optional MCP server so Claude Code/Desktop can
+  search, add, edit, and delete services directly.
 - **No hardcoded services** — the entire UI generates itself from
   `data/`. Add a category, add a service, refresh the page.
 - **iOS-inspired dark UI** — frosted glass, large typography, instant
@@ -43,6 +43,7 @@ delete them and add your own.
 - [Docker deployment](docs/docker-deployment.md) (incl. Cloudflare Access)
 - [Updating](docs/updating.md)
 - [Data model](docs/data-model.md) (folder structure, YAML schema, editing)
+- [MCP setup](docs/mcp-setup.md) — connect Claude Code/Desktop to it
 - [Backup & restore](docs/backup-restore.md)
 
 ## Stack
@@ -52,10 +53,10 @@ build pipeline, minimal dependencies, small Docker image, low RAM/CPU.
 
 ## Future integrations
 
-The data model and `/api` layer are built so these stay simple additions,
-not architecture changes: Uptime Kuma (status polling), Docker Engine API
-(auto-populate container names), GitHub API, Cloudflare API, Tailscale API,
-Home Assistant, Ollama/local LLMs, Grafana, Prometheus.
+The data model, `/api` layer, and MCP server are built so these stay simple
+additions, not architecture changes: Uptime Kuma (status polling), Docker
+Engine API (auto-populate container names), GitHub API, Cloudflare API,
+Tailscale API, Home Assistant, Ollama/local LLMs, Grafana, Prometheus.
 
 ## License
 
