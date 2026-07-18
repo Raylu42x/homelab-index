@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Search · {{ settings.site_name }}{% endblock %}
+{% block content %}
+
+<div class="section"><h1>Search</h1></div>
+
+{% if q %}
+  <p style="color: var(--text-2); margin-bottom: 16px;">{{ results|length }} result{{ "s" if results|length != 1 }} for "{{ q }}"</p>
+  {% if results %}
+  <div class="grid">
+    {% for service in results %}
+      {% include "partials/service_card.html" %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state glass">Nothing matched. Try a different name, tag, or hostname.</div>
+  {% endif %}
+{% else %}
+  <div class="empty-state glass">Start typing above to search every service, tag, host, and note.</div>
+{% endif %}
+
+{% endblock %}

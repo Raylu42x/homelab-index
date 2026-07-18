@@ -1,0 +1,6 @@
+id: development
+name: Development
+description: Git hosting, CI, and tools used to build everything else.
+icon: "🛠️"
+order: 20
+subcategories: []

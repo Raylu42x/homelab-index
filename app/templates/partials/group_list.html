@@ -1,0 +1,16 @@
+{% for key, group_services in groups.items() %}
+<div class="group-block glass">
+  <div class="group-title">
+    <span>{{ group_icon }}</span>
+    <span>{{ key }}</span>
+    <span class="group-count">{{ group_services|length }} service{{ "s" if group_services|length != 1 }}</span>
+  </div>
+  <div class="grid">
+    {% for service in group_services %}
+      {% include "partials/service_card.html" %}
+    {% endfor %}
+  </div>
+</div>
+{% else %}
+<div class="empty-state glass">{{ empty_message }}</div>
+{% endfor %}

@@ -1,0 +1,15 @@
+id: crafty
+name: Crafty Controller
+description: Web UI for managing Minecraft servers.
+category: minecraft
+icon: "⛏️"
+tags:
+  - minecraft
+  - game-server
+favorite: false
+status: online
+localhost_url: http://localhost:8443
+server: game-01
+docker_container: crafty
+docker_compose_project: minecraft
+owner: you

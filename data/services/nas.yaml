@@ -1,0 +1,18 @@
+id: nas
+name: NAS
+description: Network-attached storage — file shares and backup target.
+category: infrastructure
+subcategory: storage
+icon: "🗄️"
+tags:
+  - storage
+  - smb
+favorite: true
+status: online
+home_url: https://nas.home
+localhost_url: http://localhost:5000
+hostname: nas.home
+server: nas-01
+ip: 10.0.0.10
+owner: you
+notes: Two-drive mirror. Nightly backup job runs at 02:30.

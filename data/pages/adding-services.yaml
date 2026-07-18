@@ -1,0 +1,22 @@
+id: adding-services
+title: Adding a service
+order: 10
+content: >
+  To add a service, create a new YAML file under data/services/<id>.yaml.
+
+  Only `id` and `name` are required — every other field is optional and
+  only shows up in the UI when it's set. Copy data/services/example-service.yaml
+  for a full list of fields with placeholder values.
+
+  Categories live under data/categories/<id>.yaml. A service's `category`
+  field must match a category `id` to show up grouped correctly, but an
+  unmatched category still displays fine — it just won't have its own
+  category page.
+
+  Servers, Domains, and Projects are not separate files — they're derived
+  automatically from the `server`/`hostname`, URL, and
+  `docker_compose_project` fields on each service. There's nothing extra
+  to maintain there.
+
+  After editing YAML by hand, just refresh the page — nothing needs to be
+  rebuilt or restarted.

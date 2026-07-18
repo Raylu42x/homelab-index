@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ category.name }} · {{ settings.site_name }}{% endblock %}
+{% block content %}
+
+<div class="detail-hero glass">
+  <div class="card-icon">{{ category.icon or "🗂️" }}</div>
+  <div>
+    <h1 style="margin:0;">{{ category.name }}</h1>
+    {% if category.description %}<p style="margin-top:6px;">{{ category.description }}</p>{% endif %}
+  </div>
+</div>
+
+{% if services %}
+<div class="grid">
+  {% for service in services %}
+    {% include "partials/service_card.html" %}
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state glass">No services in this category yet.</div>
+{% endif %}
+
+{% endblock %}

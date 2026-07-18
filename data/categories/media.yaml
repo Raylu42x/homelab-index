@@ -1,0 +1,6 @@
+id: media
+name: Media
+description: Streaming, media management, and playback.
+icon: "🎬"
+order: 30
+subcategories: []

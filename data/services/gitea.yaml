@@ -1,0 +1,17 @@
+id: gitea
+name: Gitea
+description: Self-hosted git server.
+category: development
+icon: "🍵"
+tags:
+  - git
+  - self-hosted
+favorite: true
+status: online
+home_url: https://git.example.com
+hostname: git.example.com
+server: nas-01
+docker_container: gitea
+docker_compose_project: gitea
+owner: you
+notes: SSH on port 2222.

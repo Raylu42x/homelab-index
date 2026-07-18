@@ -1,0 +1,20 @@
+{% if q and results %}
+<div class="search-results glass" data-search-results>
+  {% for service in results[:8] %}
+  <a class="search-result" href="/services/{{ service.id }}">
+    <span class="card-icon" style="width:28px;height:28px;font-size:14px;">{{ service.icon or "🧩" }}</span>
+    <span style="flex:1; min-width:0;">
+      <div style="font-weight:600; font-size:13.5px;">{{ service.name }}</div>
+      {% if service.description %}<div style="font-size:12px; color: var(--text-2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ service.description }}</div>{% endif %}
+    </span>
+    <span class="status-dot {{ service.status }}"></span>
+  </a>
+  {% endfor %}
+</div>
+{% elif q %}
+<div class="search-results glass" data-search-results>
+  <div class="search-empty">No services match "{{ q }}"</div>
+</div>
+{% else %}
+<div data-search-results></div>
+{% endif %}

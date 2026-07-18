@@ -1,0 +1,12 @@
+id: infrastructure
+name: Infrastructure
+description: Core services that everything else depends on.
+icon: "🧱"
+order: 10
+subcategories:
+  - id: networking
+    name: Networking
+  - id: storage
+    name: Storage
+  - id: security
+    name: Security

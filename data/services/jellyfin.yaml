@@ -1,0 +1,19 @@
+id: jellyfin
+name: Jellyfin
+description: Self-hosted media streaming.
+category: media
+icon: "🎬"
+tags:
+  - media
+  - streaming
+favorite: true
+status: online
+public_url: https://watch.example.com
+tailscale_url: https://jellyfin.tailnet.ts.net
+docker_address: "jellyfin:8096"
+server: nas-01
+docker_container: jellyfin
+docker_compose_project: media
+owner: you
+dependencies:
+  - nas

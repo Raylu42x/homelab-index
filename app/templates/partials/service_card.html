@@ -1,0 +1,19 @@
+<a class="card glass" style="--i: {{ loop.index0 if loop is defined else 0 }};" href="/services/{{ service.id }}">
+  <div class="card-head">
+    <div class="card-icon">{{ service.icon or "🧩" }}</div>
+    <span class="status-dot {{ service.status }}" title="{{ service.status }}"></span>
+  </div>
+  <div>
+    <div class="card-title">{{ service.name }}</div>
+    {% if service.description %}<div class="card-desc">{{ service.description }}</div>{% endif %}
+  </div>
+  {% if service.tags %}
+  <div class="card-tags">
+    {% for tag in service.tags[:4] %}<span class="chip">{{ tag }}</span>{% endfor %}
+  </div>
+  {% endif %}
+  <div class="card-footer">
+    <span class="mono" style="color: var(--text-2); font-size: 12px;">{{ service.category or "uncategorized" }}</span>
+    {% if service.favorite %}<span title="Favorite">⭐</span>{% endif %}
+  </div>
+</a>

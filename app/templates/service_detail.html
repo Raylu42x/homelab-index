@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}{{ service.name }} · {{ settings.site_name }}{% endblock %}
+{% block content %}
+
+<div class="detail-hero glass">
+  <div class="card-icon">{{ service.icon or "🧩" }}</div>
+  <div style="flex:1;">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <h1 style="margin:0;">{{ service.name }}</h1>
+      <span class="status-dot {{ service.status }}" title="{{ service.status }}"></span>
+      {% include "partials/favorite_button.html" %}
+    </div>
+    {% if service.description %}<p style="margin-top:6px;">{{ service.description }}</p>{% endif %}
+    {% if service.tags %}
+    <div class="card-tags" style="margin-top:8px;">
+      {% for tag in service.tags %}<span class="chip">{{ tag }}</span>{% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% if service.access_methods() %}
+<div class="section">
+  <div class="section-head"><h2>Access</h2></div>
+  <div class="access-list">
+    {% for label, url in service.access_methods() %}
+    <div class="access-row glass">
+      <span class="label">{{ label }}</span>
+      <span class="url">{{ url }}</span>
+      <span class="actions">
+        <button class="btn btn-icon" data-copy="{{ url }}" title="Copy">📋</button>
+        {% if label != "Docker" %}
+        <a class="btn btn-icon" href="{{ url }}" target="_blank" rel="noopener" title="Open">↗</a>
+        {% endif %}
+      </span>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<div class="section">
+  <div class="section-head"><h2>Details</h2></div>
+  <div class="meta-grid glass" style="padding: 20px;">
+    {% if service.category %}<div class="meta-item"><div class="label">Category</div><div class="value"><a href="/categories/{{ service.category }}">{{ service.category }}{% if service.subcategory %} / {{ service.subcategory }}{% endif %}</a></div></div>{% endif %}
+    {% if service.server %}<div class="meta-item"><div class="label">Server</div><div class="value mono">{{ service.server }}</div></div>{% endif %}
+    {% if service.hostname %}<div class="meta-item"><div class="label">Hostname</div><div class="value mono">{{ service.hostname }}</div></div>{% endif %}
+    {% if service.ip %}<div class="meta-item"><div class="label">IP</div><div class="value mono">{{ service.ip }}</div></div>{% endif %}
+    {% if service.docker_container %}<div class="meta-item"><div class="label">Docker container</div><div class="value mono">{{ service.docker_container }}</div></div>{% endif %}
+    {% if service.docker_compose_project %}<div class="meta-item"><div class="label">Compose project</div><div class="value mono">{{ service.docker_compose_project }}</div></div>{% endif %}
+    {% if service.github_repository %}<div class="meta-item"><div class="label">Repository</div><div class="value"><a href="{{ service.github_repository }}" target="_blank" rel="noopener">{{ service.github_repository }}</a></div></div>{% endif %}
+    {% if service.documentation %}<div class="meta-item"><div class="label">Documentation</div><div class="value"><a href="{{ service.documentation }}" target="_blank" rel="noopener">{{ service.documentation }}</a></div></div>{% endif %}
+    {% if service.owner %}<div class="meta-item"><div class="label">Owner</div><div class="value">{{ service.owner }}</div></div>{% endif %}
+    {% if service.updated %}<div class="meta-item"><div class="label">Updated</div><div class="value">{{ service.updated.strftime("%Y-%m-%d %H:%M") }}</div></div>{% endif %}
+  </div>
+</div>
+
+{% if service.notes %}
+<div class="section">
+  <div class="section-head"><h2>Notes</h2></div>
+  <div class="glass" style="padding: 20px;">
+    <p class="prose">{{ service.notes }}</p>
+  </div>
+</div>
+{% endif %}
+
+{% if service.dependencies %}
+<div class="section">
+  <div class="section-head"><h2>Dependencies</h2></div>
+  <div class="card-tags">
+    {% for dep in service.dependencies %}<a class="chip" href="/services/{{ dep }}">{{ dep }}</a>{% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% if related %}
+<div class="section">
+  <div class="section-head"><h2>Related services</h2></div>
+  <div class="grid">
+    {% for service in related %}
+      {% include "partials/service_card.html" %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

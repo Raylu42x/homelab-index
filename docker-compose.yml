@@ -1,0 +1,20 @@
+services:
+  homelab-index:
+    build: .
+    image: homelab-index:latest
+    container_name: homelab-index
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - homelab-index-data:/data
+    environment:
+      - HOMELAB_DATA_DIR=/data
+
+volumes:
+  homelab-index-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data

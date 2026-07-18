@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Categories · {{ settings.site_name }}{% endblock %}
+{% block content %}
+
+<div class="section">
+  <h1>Categories</h1>
+</div>
+
+{% if categories %}
+<div class="grid">
+  {% for category in categories %}
+  <a class="card glass" style="--i: {{ loop.index0 }};" href="/categories/{{ category.id }}">
+    <div class="card-head">
+      <div class="card-icon">{{ category.icon or "🗂️" }}</div>
+      <span class="chip">{{ counts.get(category.id, 0) }}</span>
+    </div>
+    <div class="card-title">{{ category.name }}</div>
+    {% if category.description %}<div class="card-desc">{{ category.description }}</div>{% endif %}
+    {% if category.subcategories %}
+    <div class="card-tags">
+      {% for sub in category.subcategories %}<span class="chip">{{ sub.name }}</span>{% endfor %}
+    </div>
+    {% endif %}
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state glass">No categories yet. Add one under <span class="mono">/data/categories</span>.</div>
+{% endif %}
+
+{% endblock %}

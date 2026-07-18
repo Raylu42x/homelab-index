@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}{{ settings.site_name }}{% endblock %}
+{% block content %}
+
+<div class="section">
+  <h1>{{ settings.tagline }}</h1>
+</div>
+
+<div class="section">
+  <div class="section-head"><h2>Overview</h2></div>
+  <div class="stats-grid">
+    <div class="stat-card glass">
+      <div class="stat-value">{{ stats.total_services }}</div>
+      <div class="stat-label">Services</div>
+    </div>
+    <div class="stat-card glass">
+      <div class="stat-value">{{ stats.public_services }}</div>
+      <div class="stat-label">Public</div>
+    </div>
+    <div class="stat-card glass">
+      <div class="stat-value">{{ stats.tailscale_services }}</div>
+      <div class="stat-label">Tailscale</div>
+    </div>
+    <div class="stat-card glass">
+      <div class="stat-value">{{ stats.home_only_services }}</div>
+      <div class="stat-label">Home only</div>
+    </div>
+    <div class="stat-card glass">
+      <div class="stat-value">{{ stats.docker_services }}</div>
+      <div class="stat-label">Dockerized</div>
+    </div>
+    <div class="stat-card glass">
+      <div class="stat-value">{{ stats.servers }}</div>
+      <div class="stat-label">Servers</div>
+    </div>
+    <div class="stat-card glass">
+      <div class="stat-value">{{ stats.categories }}</div>
+      <div class="stat-label">Categories</div>
+    </div>
+  </div>
+</div>
+
+{% if favorites %}
+<div class="section">
+  <div class="section-head">
+    <h2>Favorites</h2>
+    <a href="/favorites">View all</a>
+  </div>
+  <div class="grid">
+    {% for service in favorites %}
+      {% include "partials/service_card.html" %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<div class="section">
+  <div class="section-head">
+    <h2>Categories</h2>
+    <a href="/categories">View all</a>
+  </div>
+  <div class="grid">
+    {% for category in categories %}
+    <a class="card glass" style="--i: {{ loop.index0 }};" href="/categories/{{ category.id }}">
+      <div class="card-icon">{{ category.icon or "🗂️" }}</div>
+      <div class="card-title">{{ category.name }}</div>
+      {% if category.description %}<div class="card-desc">{{ category.description }}</div>{% endif %}
+    </a>
+    {% endfor %}
+  </div>
+</div>
+
+{% if recent %}
+<div class="section">
+  <div class="section-head"><h2>Recently updated</h2></div>
+  <div class="grid">
+    {% for service in recent %}
+      {% include "partials/service_card.html" %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

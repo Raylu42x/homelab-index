@@ -1,0 +1,29 @@
+id: example-service
+name: Example Service
+description: A template showing every available field. Copy this file, rename it, and edit the values — then delete this one.
+category: utilities
+subcategory: null
+icon: "✨"
+tags:
+  - example
+  - template
+favorite: false
+status: unknown
+public_url: https://example.com
+tailscale_url: https://example.tailnet.ts.net
+home_url: https://example.home
+localhost_url: http://localhost:8080
+docker_address: example-service:8080
+hostname: example-host.local
+ip: 10.0.0.42
+server: example-server
+docker_container: example-service
+docker_compose_project: example-stack
+github_repository: https://github.com/example/example-service
+documentation: https://example.com/docs
+notes: >
+  Free-form notes go here. Anything relevant to running or troubleshooting
+  this service — quirks, upgrade steps, credentials location (not the
+  credentials themselves), etc.
+owner: you
+dependencies: []

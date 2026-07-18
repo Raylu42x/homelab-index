@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Documentation · {{ settings.site_name }}{% endblock %}
+{% block content %}
+
+<div class="section"><h1>Documentation</h1></div>
+
+{% if pages %}
+<div class="grid">
+  {% for page in pages %}
+  <a class="card glass" style="--i: {{ loop.index0 }};" href="/docs/{{ page.id }}">
+    <div class="card-icon">📄</div>
+    <div class="card-title">{{ page.title }}</div>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state glass">No pages yet. Add one under <span class="mono">/data/pages</span>.</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Settings · {{ settings.site_name }}{% endblock %}
+{% block content %}
+
+<div class="section"><h1>Settings</h1></div>
+
+<div class="glass" style="padding: 24px; max-width: 520px;">
+  <form method="post" action="/settings" style="display:flex; flex-direction:column; gap:16px;">
+    <label>
+      <div class="meta-item label" style="margin-bottom:6px;">Site name</div>
+      <input class="search-input" style="padding:10px 14px;" type="text" name="site_name" value="{{ settings.site_name }}" required>
+    </label>
+    <label>
+      <div class="meta-item label" style="margin-bottom:6px;">Tagline</div>
+      <input class="search-input" style="padding:10px 14px;" type="text" name="tagline" value="{{ settings.tagline }}">
+    </label>
+    <label>
+      <div class="meta-item label" style="margin-bottom:6px;">Domain</div>
+      <input class="search-input" style="padding:10px 14px;" type="text" name="domain" value="{{ settings.domain or '' }}" placeholder="index.example.com">
+    </label>
+    <label>
+      <div class="meta-item label" style="margin-bottom:6px;">Timezone</div>
+      <input class="search-input" style="padding:10px 14px;" type="text" name="timezone" value="{{ settings.timezone }}">
+    </label>
+    <button class="btn btn-accent" type="submit" style="align-self:flex-start;">Save settings</button>
+  </form>
+</div>
+
+<div class="section" style="margin-top: 32px;">
+  <div class="section-head"><h2>System</h2></div>
+  <div class="stats-grid">
+    <div class="stat-card glass">
+      <div class="stat-value">{{ stats.total_services }}</div>
+      <div class="stat-label">Total services</div>
+    </div>
+    <div class="stat-card glass">
+      <div class="stat-value">{{ stats.categories }}</div>
+      <div class="stat-label">Categories</div>
+    </div>
+  </div>
+  <p style="margin-top:16px; color: var(--text-2); font-size: 13px;">
+    Data is stored as YAML under <span class="mono">/data</span>. Edit services, categories, and
+    pages directly, or use the <span class="mono">/api</span> endpoints — see
+    <a href="/docs" style="color: var(--accent-strong);">Documentation</a> for details.
+  </p>
+</div>
+
+{% endblock %}

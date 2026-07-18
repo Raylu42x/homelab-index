@@ -1,0 +1,7 @@
+<button
+  class="star-btn {{ 'is-favorite' if service.favorite }}"
+  hx-post="/services/{{ service.id }}/toggle-favorite"
+  hx-swap="outerHTML"
+  aria-label="Toggle favorite"
+  title="Toggle favorite"
+>{{ "★" if service.favorite else "☆" }}</button>

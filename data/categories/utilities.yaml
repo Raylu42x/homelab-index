@@ -1,0 +1,6 @@
+id: utilities
+name: Utilities
+description: Small tools and one-off services.
+icon: "🧰"
+order: 40
+subcategories: []

@@ -1,0 +1,6 @@
+id: minecraft
+name: Minecraft
+description: Game servers and the tools that manage them.
+icon: "⛏️"
+order: 50
+subcategories: []

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ title_override or "All Services" }} · {{ settings.site_name }}{% endblock %}
+{% block content %}
+
+<div class="section">
+  <h1>{{ title_override or "All Services" }}</h1>
+</div>
+
+<form class="toolbar" method="get" action="{{ request.url.path }}">
+  {% if q %}<input type="hidden" name="q" value="{{ q }}">{% endif %}
+  <a class="chip {{ 'active' if not active_category }}" href="?{% if q %}q={{ q }}&{% endif %}sort={{ sort }}">All</a>
+  {% for category in categories %}
+  <a class="chip {{ 'active' if active_category == category.id }}" href="?category={{ category.id }}{% if q %}&q={{ q }}{% endif %}&sort={{ sort }}">{{ category.name }}</a>
+  {% endfor %}
+  <div class="divider"></div>
+  <a class="chip {{ 'active' if sort == 'name' }}" href="?sort=name{% if active_category %}&category={{ active_category }}{% endif %}{% if q %}&q={{ q }}{% endif %}">Name</a>
+  <a class="chip {{ 'active' if sort == 'updated' }}" href="?sort=updated{% if active_category %}&category={{ active_category }}{% endif %}{% if q %}&q={{ q }}{% endif %}">Recently updated</a>
+  <a class="chip {{ 'active' if sort == 'category' }}" href="?sort=category{% if active_category %}&category={{ active_category }}{% endif %}{% if q %}&q={{ q }}{% endif %}">Category</a>
+</form>
+
+{% if all_tags %}
+<div class="toolbar">
+  {% for tag in all_tags %}
+  <a class="chip {{ 'active' if active_tag == tag }}" href="?tag={{ tag }}{% if active_category %}&category={{ active_category }}{% endif %}&sort={{ sort }}">#{{ tag }}</a>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% if services %}
+<div class="grid">
+  {% for service in services %}
+    {% include "partials/service_card.html" %}
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state glass">No services match these filters yet.</div>
+{% endif %}
+
+{% endblock %}

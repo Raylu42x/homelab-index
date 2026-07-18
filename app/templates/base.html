@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ settings.site_name }}{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script src="/static/js/htmx.min.js" defer></script>
+  <script src="/static/js/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <nav class="sidebar glass">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <span>{{ settings.site_name }}</span>
+      </div>
+
+      <a class="nav-link {{ 'active' if active_nav == 'home' }}" href="/">
+        <span class="icon">🏠</span><span>Home</span>
+      </a>
+      <a class="nav-link {{ 'active' if active_nav == 'search' }}" href="/search">
+        <span class="icon">🔍</span><span>Search</span>
+      </a>
+      <a class="nav-link {{ 'active' if active_nav == 'favorites' }}" href="/favorites">
+        <span class="icon">⭐</span><span>Favorites</span>
+      </a>
+      <a class="nav-link {{ 'active' if active_nav == 'services' }}" href="/services">
+        <span class="icon">🧩</span><span>All Services</span>
+      </a>
+      <a class="nav-link {{ 'active' if active_nav == 'categories' }}" href="/categories">
+        <span class="icon">🗂️</span><span>Categories</span>
+      </a>
+
+      <div class="nav-group">
+        <div class="nav-label">Infrastructure</div>
+        <a class="nav-link {{ 'active' if active_nav == 'servers' }}" href="/servers">
+          <span class="icon">🖥️</span><span>Servers</span>
+        </a>
+        <a class="nav-link {{ 'active' if active_nav == 'domains' }}" href="/domains">
+          <span class="icon">🌐</span><span>Domains</span>
+        </a>
+        <a class="nav-link {{ 'active' if active_nav == 'projects' }}" href="/projects">
+          <span class="icon">📁</span><span>Projects</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label">More</div>
+        <a class="nav-link {{ 'active' if active_nav == 'docs' }}" href="/docs">
+          <span class="icon">📚</span><span>Documentation</span>
+        </a>
+        <a class="nav-link {{ 'active' if active_nav == 'settings' }}" href="/settings">
+          <span class="icon">⚙️</span><span>Settings</span>
+        </a>
+      </div>
+    </nav>
+
+    <main class="main">
+      <div class="mobile-topbar">{{ settings.site_name }}</div>
+      <div class="topbar">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input
+            type="search"
+            class="search-input"
+            name="q"
+            placeholder="Search services, tags, hosts…"
+            data-global-search
+            autocomplete="off"
+            hx-get="/search"
+            hx-trigger="input changed delay:150ms, focus"
+            hx-target="[data-search-results]"
+            hx-swap="innerHTML"
+          >
+          <span class="search-kbd"><kbd>&#8984;K</kbd></span>
+          <div data-search-results></div>
+        </div>
+      </div>
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</body>
+</html>

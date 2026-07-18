@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Domains · {{ settings.site_name }}{% endblock %}
+{% block content %}
+<div class="section"><h1>Domains</h1></div>
+{% set group_icon = "🌐" %}
+{% set empty_message = "No services have a URL set yet." %}
+{% include "partials/group_list.html" with context %}
+{% endblock %}

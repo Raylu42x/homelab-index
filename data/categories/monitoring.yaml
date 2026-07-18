@@ -1,0 +1,6 @@
+id: monitoring
+name: Monitoring
+description: Metrics, dashboards, and uptime checks.
+icon: "📊"
+order: 25
+subcategories: []
