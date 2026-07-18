@@ -4,9 +4,15 @@
 
 <div class="detail-hero glass">
   <div class="card-icon">{{ category.icon or "🗂️" }}</div>
-  <div>
+  <div style="flex:1;">
     <h1 style="margin:0;">{{ category.name }}</h1>
     {% if category.description %}<p style="margin-top:6px;">{{ category.description }}</p>{% endif %}
+  </div>
+  <div style="display:flex; gap:8px; flex:none;">
+    <a class="btn" href="/categories/{{ category.id }}/edit">Edit</a>
+    <form method="post" action="/categories/{{ category.id }}/delete" onsubmit="return confirm('Delete {{ category.name }}? Services keep their category id but it won\'t group here anymore.');">
+      <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
   </div>
 </div>
 

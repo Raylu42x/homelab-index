@@ -2,7 +2,15 @@
 {% block title %}{{ page.title }} · {{ settings.site_name }}{% endblock %}
 {% block content %}
 
-<div class="section"><h1>{{ page.title }}</h1></div>
+<div class="section" style="display:flex; align-items:center; justify-content:space-between; gap: 12px;">
+  <h1 style="margin:0;">{{ page.title }}</h1>
+  <div style="display:flex; gap:8px; flex:none;">
+    <a class="btn" href="/docs/{{ page.id }}/edit">Edit</a>
+    <form method="post" action="/docs/{{ page.id }}/delete" onsubmit="return confirm('Delete {{ page.title }}? This can\'t be undone.');">
+      <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
+  </div>
+</div>
 <div class="glass" style="padding: 24px;">
   <p class="prose">{{ page.content }}</p>
 </div>

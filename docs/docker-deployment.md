@@ -52,6 +52,14 @@ Internet → Cloudflare DNS → Cloudflare Tunnel → Cloudflare Access → app
    in front of it — anyone who can reach `/settings` or `/api/services` can
    edit your inventory.
 
+## File ownership
+
+The compose file sets `user:` to match your host UID/GID (`id -u`/`id -g`)
+so files the app writes through the UI or `/api` — new services, edits,
+favorites — come out owned by you, not root. Skip this and everything
+still works, but anything written through the app becomes root-owned and
+unreadable/un-`git diff`-able from the host until you `chown` it back.
+
 ## Health check
 
 The image ships a `HEALTHCHECK` hitting `GET /healthz`, so

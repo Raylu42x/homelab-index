@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% block title %}{{ "New service" if mode == "create" else "Edit " + (service.name or service.id) }} · {{ settings.site_name }}{% endblock %}
+{% block content %}
+
+<div class="section"><h1>{{ "New service" if mode == "create" else "Edit service" }}</h1></div>
+
+{% if error %}<div class="form-error">{{ error }}</div>{% endif %}
+
+<form class="glass" style="padding: 24px;" method="post" action="{{ '/services/new' if mode == 'create' else '/services/' + service.id + '/edit' }}">
+  <div class="form-grid">
+    <div class="field">
+      <label for="id">Id</label>
+      {% if mode == "create" %}
+      <input type="text" id="id" name="id" value="{{ service.id or '' }}" placeholder="jellyfin" required pattern="[A-Za-z0-9_-]+">
+      {% else %}
+      <input type="text" value="{{ service.id }}" disabled>
+      {% endif %}
+    </div>
+    <div class="field">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" value="{{ service.name or '' }}" required>
+    </div>
+    <div class="field full">
+      <label for="description">Description</label>
+      <input type="text" id="description" name="description" value="{{ service.description or '' }}">
+    </div>
+
+    <div class="field">
+      <label for="category">Category</label>
+      <select id="category" name="category">
+        <option value="">— none —</option>
+        {% for c in categories %}
+        <option value="{{ c.id }}" {{ "selected" if service.category == c.id }}>{{ c.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="field">
+      <label for="subcategory">Subcategory</label>
+      <input type="text" id="subcategory" name="subcategory" value="{{ service.subcategory or '' }}">
+    </div>
+    <div class="field">
+      <label for="icon">Icon <span class="hint">(emoji)</span></label>
+      <input type="text" id="icon" name="icon" value="{{ service.icon or '' }}" placeholder="🧩">
+    </div>
+    <div class="field">
+      <label for="status">Status</label>
+      <select id="status" name="status">
+        {% for s in ["unknown", "online", "offline", "maintenance"] %}
+        <option value="{{ s }}" {{ "selected" if service.status == s }}>{{ s }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="field">
+      <label for="tags">Tags <span class="hint">(comma separated)</span></label>
+      <input type="text" id="tags" name="tags" value="{{ service.tags or '' }}" placeholder="git, self-hosted">
+    </div>
+    <div class="field field-checkbox">
+      <input type="checkbox" id="favorite" name="favorite" {{ "checked" if service.favorite }}>
+      <label for="favorite">Favorite</label>
+    </div>
+
+    <div class="field">
+      <label for="public_url">Public URL</label>
+      <input type="text" id="public_url" name="public_url" value="{{ service.public_url or '' }}" placeholder="https://…">
+    </div>
+    <div class="field">
+      <label for="home_url">Home URL</label>
+      <input type="text" id="home_url" name="home_url" value="{{ service.home_url or '' }}" placeholder="https://…">
+    </div>
+    <div class="field">
+      <label for="tailscale_url">Tailscale URL</label>
+      <input type="text" id="tailscale_url" name="tailscale_url" value="{{ service.tailscale_url or '' }}" placeholder="https://…">
+    </div>
+    <div class="field">
+      <label for="localhost_url">Localhost URL</label>
+      <input type="text" id="localhost_url" name="localhost_url" value="{{ service.localhost_url or '' }}" placeholder="http://localhost:…">
+    </div>
+    <div class="field">
+      <label for="docker_address">Docker address</label>
+      <input type="text" id="docker_address" name="docker_address" value="{{ service.docker_address or '' }}" placeholder="service:8080">
+    </div>
+
+    <div class="field">
+      <label for="hostname">Hostname</label>
+      <input type="text" id="hostname" name="hostname" value="{{ service.hostname or '' }}">
+    </div>
+    <div class="field">
+      <label for="ip">IP</label>
+      <input type="text" id="ip" name="ip" value="{{ service.ip or '' }}">
+    </div>
+    <div class="field">
+      <label for="server">Server</label>
+      <input type="text" id="server" name="server" value="{{ service.server or '' }}">
+    </div>
+    <div class="field">
+      <label for="docker_container">Docker container</label>
+      <input type="text" id="docker_container" name="docker_container" value="{{ service.docker_container or '' }}">
+    </div>
+    <div class="field">
+      <label for="docker_compose_project">Compose project</label>
+      <input type="text" id="docker_compose_project" name="docker_compose_project" value="{{ service.docker_compose_project or '' }}">
+    </div>
+
+    <div class="field">
+      <label for="github_repository">GitHub repository</label>
+      <input type="text" id="github_repository" name="github_repository" value="{{ service.github_repository or '' }}">
+    </div>
+    <div class="field">
+      <label for="documentation">Documentation URL</label>
+      <input type="text" id="documentation" name="documentation" value="{{ service.documentation or '' }}">
+    </div>
+    <div class="field">
+      <label for="owner">Owner</label>
+      <input type="text" id="owner" name="owner" value="{{ service.owner or '' }}">
+    </div>
+    <div class="field">
+      <label for="dependencies">Dependencies <span class="hint">(comma separated ids)</span></label>
+      <input type="text" id="dependencies" name="dependencies" value="{{ service.dependencies or '' }}">
+    </div>
+
+    <div class="field full">
+      <label for="notes">Notes</label>
+      <textarea id="notes" name="notes">{{ service.notes or '' }}</textarea>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button class="btn btn-accent" type="submit">{{ "Create service" if mode == "create" else "Save changes" }}</button>
+    <a class="btn" href="{{ '/services/' + service.id if mode == 'edit' else '/services' }}">Cancel</a>
+  </div>
+</form>
+
+{% endblock %}

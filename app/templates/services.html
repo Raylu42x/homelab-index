@@ -2,8 +2,9 @@
 {% block title %}{{ title_override or "All Services" }} · {{ settings.site_name }}{% endblock %}
 {% block content %}
 
-<div class="section">
-  <h1>{{ title_override or "All Services" }}</h1>
+<div class="section" style="display:flex; align-items:center; justify-content:space-between; gap: 12px;">
+  <h1 style="margin:0;">{{ title_override or "All Services" }}</h1>
+  <a class="btn btn-accent" href="/services/new">+ New service</a>
 </div>
 
 <form class="toolbar" method="get" action="{{ request.url.path }}">

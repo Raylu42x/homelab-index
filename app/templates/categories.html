@@ -2,8 +2,9 @@
 {% block title %}Categories · {{ settings.site_name }}{% endblock %}
 {% block content %}
 
-<div class="section">
-  <h1>Categories</h1>
+<div class="section" style="display:flex; align-items:center; justify-content:space-between; gap: 12px;">
+  <h1 style="margin:0;">Categories</h1>
+  <a class="btn btn-accent" href="/categories/new">+ New category</a>
 </div>
 
 {% if categories %}

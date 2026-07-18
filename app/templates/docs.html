@@ -2,7 +2,10 @@
 {% block title %}Documentation · {{ settings.site_name }}{% endblock %}
 {% block content %}
 
-<div class="section"><h1>Documentation</h1></div>
+<div class="section" style="display:flex; align-items:center; justify-content:space-between; gap: 12px;">
+  <h1 style="margin:0;">Documentation</h1>
+  <a class="btn btn-accent" href="/docs/new">+ New page</a>
+</div>
 
 {% if pages %}
 <div class="grid">

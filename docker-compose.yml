@@ -4,6 +4,10 @@ services:
     image: homelab-index:latest
     container_name: homelab-index
     restart: unless-stopped
+    # Match your host user so files the app writes under ./data stay
+    # readable/editable/git-diffable outside the container. Find yours
+    # with `id -u`/`id -g`; 1000:1000 is the common default on Linux.
+    user: "${PUID:-1000}:${PGID:-1000}"
     ports:
       - "8000:8000"
     volumes:

@@ -17,6 +17,12 @@
     </div>
     {% endif %}
   </div>
+  <div style="display:flex; gap:8px; flex:none;">
+    <a class="btn" href="/services/{{ service.id }}/edit">Edit</a>
+    <form method="post" action="/services/{{ service.id }}/delete" onsubmit="return confirm('Delete {{ service.name }}? This can\'t be undone.');">
+      <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
+  </div>
 </div>
 
 {% if service.access_methods() %}

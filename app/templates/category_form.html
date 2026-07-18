@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}{{ "New category" if mode == "create" else "Edit " + (category.name or category.id) }} · {{ settings.site_name }}{% endblock %}
+{% block content %}
+
+<div class="section"><h1>{{ "New category" if mode == "create" else "Edit category" }}</h1></div>
+
+{% if error %}<div class="form-error">{{ error }}</div>{% endif %}
+
+<form class="glass" style="padding: 24px; max-width: 640px;" method="post" action="{{ '/categories/new' if mode == 'create' else '/categories/' + category.id + '/edit' }}">
+  <div class="form-grid">
+    <div class="field">
+      <label for="id">Id</label>
+      {% if mode == "create" %}
+      <input type="text" id="id" name="id" value="{{ category.id or '' }}" placeholder="media" required pattern="[A-Za-z0-9_-]+">
+      {% else %}
+      <input type="text" value="{{ category.id }}" disabled>
+      {% endif %}
+    </div>
+    <div class="field">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" value="{{ category.name or '' }}" required>
+    </div>
+    <div class="field full">
+      <label for="description">Description</label>
+      <input type="text" id="description" name="description" value="{{ category.description or '' }}">
+    </div>
+    <div class="field">
+      <label for="icon">Icon <span class="hint">(emoji)</span></label>
+      <input type="text" id="icon" name="icon" value="{{ category.icon or '' }}" placeholder="🗂️">
+    </div>
+    <div class="field">
+      <label for="order">Order <span class="hint">(lower sorts first)</span></label>
+      <input type="number" id="order" name="order" value="{{ category.order if category.order is defined else 100 }}">
+    </div>
+    <div class="field full">
+      <label for="subcategories">Subcategories <span class="hint">(one per line: id | Name)</span></label>
+      <textarea id="subcategories" name="subcategories" placeholder="ci | CI/CD">{{ category.subcategories or '' }}</textarea>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button class="btn btn-accent" type="submit">{{ "Create category" if mode == "create" else "Save changes" }}</button>
+    <a class="btn" href="{{ '/categories/' + category.id if mode == 'edit' else '/categories' }}">Cancel</a>
+  </div>
+</form>
+
+{% endblock %}

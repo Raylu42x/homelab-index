@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ "New page" if mode == "create" else "Edit " + (page.title or page.id) }} · {{ settings.site_name }}{% endblock %}
+{% block content %}
+
+<div class="section"><h1>{{ "New page" if mode == "create" else "Edit page" }}</h1></div>
+
+{% if error %}<div class="form-error">{{ error }}</div>{% endif %}
+
+<form class="glass" style="padding: 24px; max-width: 720px;" method="post" action="{{ '/docs/new' if mode == 'create' else '/docs/' + page.id + '/edit' }}">
+  <div class="form-grid">
+    <div class="field">
+      <label for="id">Id</label>
+      {% if mode == "create" %}
+      <input type="text" id="id" name="id" value="{{ page.id or '' }}" placeholder="runbook-backups" required pattern="[A-Za-z0-9_-]+">
+      {% else %}
+      <input type="text" value="{{ page.id }}" disabled>
+      {% endif %}
+    </div>
+    <div class="field">
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" value="{{ page.title or '' }}" required>
+    </div>
+    <div class="field">
+      <label for="order">Order <span class="hint">(lower sorts first)</span></label>
+      <input type="number" id="order" name="order" value="{{ page.order if page.order is defined else 100 }}">
+    </div>
+    <div class="field full">
+      <label for="content">Content</label>
+      <textarea id="content" name="content" style="min-height: 260px;">{{ page.content or '' }}</textarea>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button class="btn btn-accent" type="submit">{{ "Create page" if mode == "create" else "Save changes" }}</button>
+    <a class="btn" href="{{ '/docs/' + page.id if mode == 'edit' else '/docs' }}">Cancel</a>
+  </div>
+</form>
+
+{% endblock %}
