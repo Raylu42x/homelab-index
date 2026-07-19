@@ -20,7 +20,7 @@ from mcp.server.fastmcp import FastMCP
 
 from app import aggregates, search, storage
 from app.config import ensure_data_dirs
-from app.models import Category, Service
+from app.models import Category, Page, Service
 from app.storage import InvalidIdError, RecordNotFoundError
 
 ensure_data_dirs()
@@ -38,6 +38,10 @@ def _service_dict(service: Service) -> dict[str, Any]:
 
 def _category_dict(category: Category) -> dict[str, Any]:
     return category.model_dump(mode="json", exclude_none=True)
+
+
+def _page_dict(page: Page) -> dict[str, Any]:
+    return page.model_dump(mode="json", exclude_none=True)
 
 
 # ---------------------------------------------------------------------------
@@ -147,6 +151,68 @@ def delete_category(id: str) -> dict[str, str]:
         raise ValueError(f"no category with id '{id}'")
     except InvalidIdError:
         raise ValueError(f"'{id}' is not a valid category id")
+    return {"deleted": id}
+
+
+# ---------------------------------------------------------------------------
+# Pages (documentation shown under the "Documentation" nav item)
+# ---------------------------------------------------------------------------
+
+
+@mcp.tool()
+def list_pages() -> list[dict[str, Any]]:
+    """List all documentation pages."""
+    return [_page_dict(p) for p in storage.list_pages()]
+
+
+@mcp.tool()
+def get_page(id: str) -> dict[str, Any]:
+    """Get one documentation page's full content by id."""
+    try:
+        return _page_dict(storage.get_page(id))
+    except RecordNotFoundError:
+        raise ValueError(f"no page with id '{id}'")
+    except InvalidIdError:
+        raise ValueError(f"'{id}' is not a valid page id")
+
+
+@mcp.tool()
+def add_page(page: dict[str, Any]) -> dict[str, Any]:
+    """Create a documentation page. Requires 'id' and 'title'; 'content' is plain
+    text (line breaks preserved, HTML escaped) and 'order' controls sort position
+    on the Documentation index (lower sorts first, default 100)."""
+    try:
+        storage.get_page(page.get("id", ""))
+        raise ValueError(f"page '{page.get('id')}' already exists — use edit_page instead")
+    except RecordNotFoundError:
+        pass
+    return _page_dict(storage.save_page(Page.model_validate(page)))
+
+
+@mcp.tool()
+def edit_page(id: str, updates: dict[str, Any]) -> dict[str, Any]:
+    """Update one or more fields on an existing documentation page."""
+    try:
+        existing = storage.get_page(id)
+    except RecordNotFoundError:
+        raise ValueError(f"no page with id '{id}'")
+    except InvalidIdError:
+        raise ValueError(f"'{id}' is not a valid page id")
+    data = existing.model_dump(mode="json")
+    data.update(updates)
+    data["id"] = id
+    return _page_dict(storage.save_page(Page.model_validate(data)))
+
+
+@mcp.tool()
+def delete_page(id: str) -> dict[str, str]:
+    """Permanently delete a documentation page."""
+    try:
+        storage.delete_page(id)
+    except RecordNotFoundError:
+        raise ValueError(f"no page with id '{id}'")
+    except InvalidIdError:
+        raise ValueError(f"'{id}' is not a valid page id")
     return {"deleted": id}
 
 
