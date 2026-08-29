@@ -61,3 +61,24 @@ Tailscale API, Home Assistant, Ollama/local LLMs, Grafana, Prometheus.
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+## Tests
+
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements-dev.txt
+pytest
+```
+
+33 tests covering the JSON API end to end — service/category/page CRUD,
+search and filtering, the derived aggregates (servers, domains, stats), and
+id validation.
+
+The validation tests matter more than they look: a service `id` becomes a
+filename (`{id}.yaml`), so they assert that ids like `../escape` and
+`../../etc/passwd` are rejected with 422 and that nothing is written outside
+the data directory.
+
+Each test runs against a fresh temporary `HOMELAB_DATA_DIR`. Because
+`app.config` resolves its paths at import time, the fixture sets the env var
+and then reloads the affected modules — see `tests/conftest.py`.
